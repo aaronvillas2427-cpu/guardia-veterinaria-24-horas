@@ -36,13 +36,13 @@ function Historial() {
       <PageHeader title="Historial" subtitle="Los eventos nunca se borran. Deshacer y rehacer agregan eventos compensatorios." />
       <Ready>
         <div className="grid gap-4 lg:grid-cols-[.85fr_1.15fr] items-start">
-          <Panel title="Estado al…" className="sticky top-20 z-10">
+          <Panel title="Estado al…" className="sticky top-20 z-10 max-h-[55dvh] overflow-auto">
             <div className="flex flex-wrap items-end gap-2">
               <label className="flex flex-col gap-1">
                 <span className="text-xs font-medium text-muted-foreground">Fecha y hora</span>
                 <input type="datetime-local" value={at} onChange={(e) => setAt(e.target.value)} className="h-11 rounded-lg border border-input bg-background px-3 text-sm" />
               </label>
-              <Button onClick={() => setAt(toLocalInput(Date.now() - 86400000))} className="h-11 rounded-lg border border-border bg-card px-3 text-sm">Hace 24 h</Button>
+              <Button variant="outline" onClick={() => setAt(toLocalInput(Date.now() - 86400000))} className="h-11 rounded-lg border border-border bg-card px-3 text-sm">Hace 24 h</Button>
             </div>
             {!past ? (
               <p className="mt-3 text-sm text-muted-foreground">Elija un momento para reconstruir turnos, jaulas y ocupación.</p>
@@ -58,7 +58,7 @@ function Historial() {
                 {SPECIES.map((s) => (
                   <div key={s}>
                     <Meter label={SPECIES_LABEL[s]} value={past.occupancy[s].filter(Boolean).length} max={past.params.cages[s]} />
-                    <p className="mt-1 truncate text-xs text-muted-foreground">{past.occupancy[s].map((a, i) => (a ? `${i + 1}: ${a.patient}` : null)).filter(Boolean).join(" · ") || "Sin pacientes"}</p>
+                    <p className="mt-1 break-words text-xs text-muted-foreground">{past.occupancy[s].map((a, i) => (a ? `${i + 1}: ${a.patient}` : null)).filter(Boolean).join(" · ") || "Sin pacientes"}</p>
                   </div>
                 ))}
               </div>

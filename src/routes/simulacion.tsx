@@ -56,7 +56,7 @@ function Simulacion() {
       <ol className="mb-6 grid grid-cols-3 gap-2" aria-label="Etapas de simulación">{["Parámetros", "Ejecutar", "Resultados"].map((name,i)=><li key={name}><Button variant="ghost" disabled={running || (i===2&&!sim)} onClick={()=>setStage((i+1) as 1|2|3)} aria-current={stage===i+1?"step":undefined} className={`w-full flex-wrap border-b-2 rounded-none px-1 text-xs ${stage===i+1?"border-primary text-primary":"border-border/40 text-muted-foreground"}`}><span className="flex h-6 w-6 items-center justify-center rounded-full bg-muted font-mono">{stage>i+1?<Check className="h-3 w-3"/>:i+1}</span>{name}</Button></li>)}</ol>
       {running && <div className="mb-6 rounded-xl border border-primary bg-card p-4" aria-busy="true"><p className="mb-3 flex items-center gap-2 text-sm"><Loader2 className="h-4 w-4 animate-spin"/>Calculando {p.replications} réplicas de 24 horas…</p><div role="progressbar" aria-label="Simulación en curso" className="h-2 overflow-hidden rounded-full bg-muted"><div className="skeleton h-full w-full bg-primary"/></div></div>}
       <Ready>
-        <Panel className="mb-4" title="Parámetros del turno">
+        {stage === 1 && <Panel className="mb-4" title="Parámetros del turno">
           <div className="flex flex-wrap items-end gap-3">
             <Segmented value={day} onChange={setDay} options={[{ value: "weekday", label: "Entre semana" }, { value: "weekend", label: "Fin de semana" }]} />
             <NumField className="w-32" label="Semilla" max={4294967295} value={p.seed} onCommit={(v) => void dispatch({ kind: "params/set", payload: { patch: { seed: Math.floor(v) }, label: `Semilla ${p.seed} → ${Math.floor(v)}` } })} />
@@ -68,17 +68,17 @@ function Simulacion() {
           <p className="mt-3 text-xs text-muted-foreground">
             Médicos por franja: {vetsFor(p, day).join(" · ")} — <Link to="/turnos" className="min-h-11 inline-flex items-center text-primary underline">editar en Turnos</Link>
           </p>
-        </Panel>
+        </Panel>}
 
         {stage === 2 && !running && <div className="mb-6 flex items-center justify-between gap-3 border-y border-border/40 py-5"><p className="text-sm text-muted-foreground">{p.replications} réplicas listas para ejecutar.</p><Button onClick={run}><Play/>Ejecutar</Button></div>}
-        {!sim ? (
+        {stage === 3 && (!sim ? (
           <EmptyState title="Aún no hay simulación"><Button onClick={run} disabled={running} variant="outline" className="mt-3"><Play/>Ejecutar primera simulación</Button></EmptyState>
         ) : (
           <>
             <p className="mb-3 text-sm text-muted-foreground">
               Resultado: {sim.dayType === "weekend" ? "fin de semana" : "entre semana"} · {sim.summary.replications} réplicas · semilla {sim.summary.seed} · {fmtDate(sim.ts)}
             </p>
-            <div className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <Metric label="Espera media urgencia" value={fmt(sim.summary.waitU.mean)} unit="min" hint={ci(sim.summary.waitU)} interval={sim.summary.waitU} />
               <Metric label="Espera media consulta" value={fmt(sim.summary.waitC.mean)} unit="min" hint={ci(sim.summary.waitC)} interval={sim.summary.waitC} />
               <Metric label="Abandonos" value={fmt(sim.summary.abandoned.mean)} unit="por día" hint={`${ci(sim.summary.abandoned)} · ${pct(sim.summary.abandonRate.mean)} de consultas`} interval={sim.summary.abandoned} tone={sim.summary.abandonRate.mean > 0.05 ? "warn" : "ok"} />
@@ -96,7 +96,7 @@ function Simulacion() {
               Llegadas por día: {fmt(sim.summary.arrivals.mean, 0)} ({ci(sim.summary.arrivals, 0)}). {sim.summary.unserved > 0 && `Sin atender al cierre por falta de médicos: ${fmt(sim.summary.unserved)}.`}
             </p>
           </>
-        )}
+        ))}
       </Ready>
     </div>
   );
