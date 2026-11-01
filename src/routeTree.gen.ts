@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AtencionRouteImport } from './routes/atencion'
+import { Route as ErlangRouteImport } from './routes/erlang'
+import { Route as SimulacionRouteImport } from './routes/simulacion'
+import { Route as TurnosRouteImport } from './routes/turnos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtencionRoute = AtencionRouteImport.update({
+  id: '/atencion',
+  path: '/atencion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErlangRoute = ErlangRouteImport.update({
+  id: '/erlang',
+  path: '/erlang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimulacionRoute = SimulacionRouteImport.update({
+  id: '/simulacion',
+  path: '/simulacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TurnosRoute = TurnosRouteImport.update({
+  id: '/turnos',
+  path: '/turnos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/atencion': typeof AtencionRoute
+  '/erlang': typeof ErlangRoute
+  '/simulacion': typeof SimulacionRoute
+  '/turnos': typeof TurnosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/atencion': typeof AtencionRoute
+  '/erlang': typeof ErlangRoute
+  '/simulacion': typeof SimulacionRoute
+  '/turnos': typeof TurnosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/atencion': typeof AtencionRoute
+  '/erlang': typeof ErlangRoute
+  '/simulacion': typeof SimulacionRoute
+  '/turnos': typeof TurnosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/atencion' | '/erlang' | '/simulacion' | '/turnos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/atencion' | '/erlang' | '/simulacion' | '/turnos'
+  id: '__root__' | '/' | '/atencion' | '/erlang' | '/simulacion' | '/turnos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AtencionRoute: typeof AtencionRoute
+  ErlangRoute: typeof ErlangRoute
+  SimulacionRoute: typeof SimulacionRoute
+  TurnosRoute: typeof TurnosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atencion': {
+      id: '/atencion'
+      path: '/atencion'
+      fullPath: '/atencion'
+      preLoaderRoute: typeof AtencionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/erlang': {
+      id: '/erlang'
+      path: '/erlang'
+      fullPath: '/erlang'
+      preLoaderRoute: typeof ErlangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulacion': {
+      id: '/simulacion'
+      path: '/simulacion'
+      fullPath: '/simulacion'
+      preLoaderRoute: typeof SimulacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/turnos': {
+      id: '/turnos'
+      path: '/turnos'
+      fullPath: '/turnos'
+      preLoaderRoute: typeof TurnosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AtencionRoute: AtencionRoute,
+  ErlangRoute: ErlangRoute,
+  SimulacionRoute: SimulacionRoute,
+  TurnosRoute: TurnosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
