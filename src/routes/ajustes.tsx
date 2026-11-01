@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -38,11 +39,11 @@ function Ajustes() {
           <Panel title="Datos de ejemplo">
             <p className="text-sm text-muted-foreground">Borra todo el historial y los registros y vuelve a generar los datos de ejemplo (semilla 72000).</p>
             {!confirm ? (
-              <button onClick={() => setConfirm(true)} className="mt-3 h-12 rounded-lg border border-destructive/50 px-4 font-semibold text-destructive">Restaurar datos de ejemplo</button>
+              <Button onClick={() => setConfirm(true)} className="mt-3 h-12 rounded-lg border border-destructive/50 px-4 font-semibold text-destructive">Restaurar datos de ejemplo</Button>
             ) : (
               <div className="mt-3 flex flex-wrap gap-2">
-                <button disabled={busy} onClick={restore} className="h-12 rounded-lg bg-destructive px-4 font-semibold text-destructive-foreground disabled:opacity-60">{busy ? "Restaurando…" : "Sí, borrar y restaurar"}</button>
-                <button onClick={() => setConfirm(false)} className="h-12 rounded-lg border border-border bg-card px-4">Cancelar</button>
+                <Button disabled={busy} onClick={restore} className="h-12 rounded-lg bg-destructive px-4 font-semibold text-destructive-foreground disabled:opacity-60">{busy ? "Restaurando…" : "Sí, borrar y restaurar"}</Button>
+                <Button onClick={() => setConfirm(false)} className="h-12 rounded-lg border border-border bg-card px-4">Cancelar</Button>
               </div>
             )}
           </Panel>

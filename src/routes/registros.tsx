@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { useDeferredValue, useMemo, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -80,27 +81,27 @@ function Registros() {
         </div>
         <div className="mb-2 flex items-center justify-between">
           <span className="font-mono text-sm tabular-nums">{count.toLocaleString("es-MX")} filas</span>
-          <button onClick={exportCsv} disabled={!count} className="flex h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium disabled:opacity-40"><Download className="h-4 w-4" /> Exportar CSV</button>
+          <Button onClick={exportCsv} disabled={!count} className="flex h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium disabled:opacity-40"><Download className="h-4 w-4" /> Exportar CSV</Button>
         </div>
         {count === 0 ? (
-          <EmptyState title="Sin resultados">{visits.length + hosps.length === 0 ? "No hay registros. Restaure los datos de ejemplo en Ajustes." : "Ningún registro coincide con los filtros."}</EmptyState>
+          <EmptyState title="Sin resultados">{visits.length + hosps.length === 0 ? "No hay registros. Restaure los datos de ejemplo en Ajustes." : <Button variant="outline" className="mt-3" onClick={()=>{setQ("");setSpecies("all");setKind("all");setFrom("");setTo("");}}>Limpiar filtros</Button>}</EmptyState>
         ) : tab === "v" ? (
-          <VList count={vRows.length} render={(i) => { const v = vRows[i]!; return (
-            <div className="flex h-full items-center gap-3 border-b border-border px-3">
+          <VList count={vRows.length} render={(i) => { const v = vRows[i]; if (!v) return null; return (
+            <div className="flex h-full items-center gap-2 border-b border-border px-3">
               <span className={cn("w-2 self-stretch my-3 rounded-full", v.type === "urgencia" ? "bg-destructive" : "bg-primary/50")} />
               <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium">{v.patient}</div>
-                <div className="text-xs text-muted-foreground">{fmtDate(v.ts)} · {SPECIES_SINGULAR[v.species]} · {v.type === "urgencia" ? "Urgencia" : "Consulta"}</div>
+                <div className="break-words text-sm font-medium">{v.patient}</div>
+                <div className="mt-1 text-xs text-muted-foreground">{fmtDate(v.ts)} · {SPECIES_SINGULAR[v.species]} · {v.type === "urgencia" ? "Urgencia" : "Consulta"}</div>
               </div>
-              <div className="text-right font-mono text-sm tabular-nums">{fmt(v.waitMin)} <span className="text-xs text-muted-foreground">min</span>{v.abandoned && <div className="text-[11px] font-sans font-semibold text-destructive">abandonó</div>}</div>
+              <div className="w-16 shrink-0 text-right font-mono text-sm tabular-nums">{fmt(v.waitMin)} <span className="mt-1 text-xs text-muted-foreground">min</span>{v.abandoned && <div className="text-[11px] font-sans font-semibold text-destructive">abandonó</div>}</div>
             </div>); }} />
         ) : (
-          <VList count={hRows.length} render={(i) => { const h = hRows[i]!; return (
-            <div className="flex h-full items-center gap-3 border-b border-border px-3">
+          <VList count={hRows.length} render={(i) => { const h = hRows[i]; if (!h) return null; return (
+            <div className="flex h-full items-center gap-2 border-b border-border px-3">
               <span className={cn("w-2 self-stretch my-3 rounded-full", h.referred ? "bg-destructive" : "bg-primary/50")} />
               <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium">{h.patient}</div>
-                <div className="text-xs text-muted-foreground">{fmtDate(h.admitTs)} · {SPECIES_SINGULAR[h.species]}</div>
+                <div className="break-words text-sm font-medium">{h.patient}</div>
+                <div className="mt-1 text-xs text-muted-foreground">{fmtDate(h.admitTs)} · {SPECIES_SINGULAR[h.species]}</div>
               </div>
               <div className="text-right text-sm">{h.referred ? <span className="font-semibold text-destructive">Referido</span> : <><span className="font-mono">Jaula {h.cage + 1}</span><div className="font-mono text-xs text-muted-foreground">{fmt((h.dischargeTs - h.admitTs) / 86400000)} d</div></>}</div>
             </div>); }} />
@@ -112,12 +113,12 @@ function Registros() {
 
 function VList({ count, render }: { count: number; render: (i: number) => React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-  const v = useVirtualizer({ count, getScrollElement: () => ref.current, estimateSize: () => 64, overscan: 10 });
+  const v = useVirtualizer({ count, getScrollElement: () => ref.current, estimateSize: () => 112, overscan: 10 });
   return (
-    <div ref={ref} className="h-[65vh] overflow-auto rounded-xl border border-border bg-card shadow-panel [contain:strict]">
+    <div ref={ref} role="region" aria-label="Lista de registros" tabIndex={0} className="h-[65dvh] overflow-auto rounded-xl border border-border bg-card shadow-panel [contain:strict]">
       <div style={{ height: v.getTotalSize(), position: "relative" }}>
         {v.getVirtualItems().map((it) => (
-          <div key={it.key} style={{ position: "absolute", top: 0, left: 0, right: 0, height: 64, transform: `translateY(${it.start}px)` }}>{render(it.index)}</div>
+          <div key={it.key} style={{ position: "absolute", top: 0, left: 0, right: 0, height: 112, transform: `translateY(${it.start}px)` }}>{render(it.index)}</div>
         ))}
       </div>
     </div>
