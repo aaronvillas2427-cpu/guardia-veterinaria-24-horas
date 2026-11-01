@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AjustesRouteImport } from './routes/ajustes'
+import { Route as AtencionRouteImport } from './routes/atencion'
+import { Route as ErlangRouteImport } from './routes/erlang'
+import { Route as HistorialRouteImport } from './routes/historial'
+import { Route as HospitalizacionRouteImport } from './routes/hospitalizacion'
+import { Route as JaulasRouteImport } from './routes/jaulas'
+import { Route as RegistrosRouteImport } from './routes/registros'
+import { Route as SimulacionRouteImport } from './routes/simulacion'
+import { Route as TurnosRouteImport } from './routes/turnos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AjustesRoute = AjustesRouteImport.update({
+  id: '/ajustes',
+  path: '/ajustes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtencionRoute = AtencionRouteImport.update({
+  id: '/atencion',
+  path: '/atencion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErlangRoute = ErlangRouteImport.update({
+  id: '/erlang',
+  path: '/erlang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistorialRoute = HistorialRouteImport.update({
+  id: '/historial',
+  path: '/historial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HospitalizacionRoute = HospitalizacionRouteImport.update({
+  id: '/hospitalizacion',
+  path: '/hospitalizacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JaulasRoute = JaulasRouteImport.update({
+  id: '/jaulas',
+  path: '/jaulas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistrosRoute = RegistrosRouteImport.update({
+  id: '/registros',
+  path: '/registros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimulacionRoute = SimulacionRouteImport.update({
+  id: '/simulacion',
+  path: '/simulacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TurnosRoute = TurnosRouteImport.update({
+  id: '/turnos',
+  path: '/turnos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/ajustes': typeof AjustesRoute
+  '/atencion': typeof AtencionRoute
+  '/erlang': typeof ErlangRoute
+  '/historial': typeof HistorialRoute
+  '/hospitalizacion': typeof HospitalizacionRoute
+  '/jaulas': typeof JaulasRoute
+  '/registros': typeof RegistrosRoute
+  '/simulacion': typeof SimulacionRoute
+  '/turnos': typeof TurnosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/ajustes': typeof AjustesRoute
+  '/atencion': typeof AtencionRoute
+  '/erlang': typeof ErlangRoute
+  '/historial': typeof HistorialRoute
+  '/hospitalizacion': typeof HospitalizacionRoute
+  '/jaulas': typeof JaulasRoute
+  '/registros': typeof RegistrosRoute
+  '/simulacion': typeof SimulacionRoute
+  '/turnos': typeof TurnosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/ajustes': typeof AjustesRoute
+  '/atencion': typeof AtencionRoute
+  '/erlang': typeof ErlangRoute
+  '/historial': typeof HistorialRoute
+  '/hospitalizacion': typeof HospitalizacionRoute
+  '/jaulas': typeof JaulasRoute
+  '/registros': typeof RegistrosRoute
+  '/simulacion': typeof SimulacionRoute
+  '/turnos': typeof TurnosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/ajustes'
+    | '/atencion'
+    | '/erlang'
+    | '/historial'
+    | '/hospitalizacion'
+    | '/jaulas'
+    | '/registros'
+    | '/simulacion'
+    | '/turnos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/ajustes'
+    | '/atencion'
+    | '/erlang'
+    | '/historial'
+    | '/hospitalizacion'
+    | '/jaulas'
+    | '/registros'
+    | '/simulacion'
+    | '/turnos'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/ajustes'
+    | '/atencion'
+    | '/erlang'
+    | '/historial'
+    | '/hospitalizacion'
+    | '/jaulas'
+    | '/registros'
+    | '/simulacion'
+    | '/turnos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  AjustesRoute: typeof AjustesRoute
+  AtencionRoute: typeof AtencionRoute
+  ErlangRoute: typeof ErlangRoute
+  HistorialRoute: typeof HistorialRoute
+  HospitalizacionRoute: typeof HospitalizacionRoute
+  JaulasRoute: typeof JaulasRoute
+  RegistrosRoute: typeof RegistrosRoute
+  SimulacionRoute: typeof SimulacionRoute
+  TurnosRoute: typeof TurnosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ajustes': {
+      id: '/ajustes'
+      path: '/ajustes'
+      fullPath: '/ajustes'
+      preLoaderRoute: typeof AjustesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atencion': {
+      id: '/atencion'
+      path: '/atencion'
+      fullPath: '/atencion'
+      preLoaderRoute: typeof AtencionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/erlang': {
+      id: '/erlang'
+      path: '/erlang'
+      fullPath: '/erlang'
+      preLoaderRoute: typeof ErlangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historial': {
+      id: '/historial'
+      path: '/historial'
+      fullPath: '/historial'
+      preLoaderRoute: typeof HistorialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hospitalizacion': {
+      id: '/hospitalizacion'
+      path: '/hospitalizacion'
+      fullPath: '/hospitalizacion'
+      preLoaderRoute: typeof HospitalizacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jaulas': {
+      id: '/jaulas'
+      path: '/jaulas'
+      fullPath: '/jaulas'
+      preLoaderRoute: typeof JaulasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registros': {
+      id: '/registros'
+      path: '/registros'
+      fullPath: '/registros'
+      preLoaderRoute: typeof RegistrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulacion': {
+      id: '/simulacion'
+      path: '/simulacion'
+      fullPath: '/simulacion'
+      preLoaderRoute: typeof SimulacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/turnos': {
+      id: '/turnos'
+      path: '/turnos'
+      fullPath: '/turnos'
+      preLoaderRoute: typeof TurnosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  AjustesRoute: AjustesRoute,
+  AtencionRoute: AtencionRoute,
+  ErlangRoute: ErlangRoute,
+  HistorialRoute: HistorialRoute,
+  HospitalizacionRoute: HospitalizacionRoute,
+  JaulasRoute: JaulasRoute,
+  RegistrosRoute: RegistrosRoute,
+  SimulacionRoute: SimulacionRoute,
+  TurnosRoute: TurnosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
