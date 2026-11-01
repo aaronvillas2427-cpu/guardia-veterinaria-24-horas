@@ -1,6 +1,6 @@
 # Rediseño clínico
-- [ ] Sistema visual, temas y navegación accesible
-- [ ] Inicio, turnos y simulación
-- [ ] Erlang C, jaulas, hospitalización e historial
-- [ ] Formularios y pantallas restantes
-- [ ] Verificación de accesibilidad, navegación y cálculos sin cambios
+- [x] Sistema visual, temas y navegación accesible
+- [x] Inicio, turnos y simulación
+- [x] Erlang C, jaulas, hospitalización e historial
+- [x] Formularios y pantallas restantes
+- [x] Verificación de accesibilidad, navegación y cálculos sin cambios
