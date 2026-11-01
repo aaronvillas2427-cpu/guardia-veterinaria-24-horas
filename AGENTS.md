@@ -16,3 +16,5 @@
 - Everything read from storage or imported is validated with the zod schemas in `src/engine/validate.ts`.
 - Shift simulations run in a Web Worker (`src/workers/sim.worker.ts`) via `src/lib/sim-runner.ts`.
 - The /admin key is a plain constant in `src/lib/admin.ts` — not real auth.
+- UI theme preferences are isolated from hospital event data; only the visual theme uses localStorage, and system preference is followed until an explicit choice.
+- Shared dashboard controls expose chart tables and use Radix overlays for focus trapping and Escape behavior; visual projections never alter calculation engines.

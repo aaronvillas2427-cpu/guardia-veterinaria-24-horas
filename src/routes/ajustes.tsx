@@ -1,8 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { PageHeader, Panel, Ready } from "@/components/app/kit";
 import { useStore } from "@/lib/store";
+import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { pageHead } from "@/lib/head";
 
 export const Route = createFileRoute("/ajustes")({
@@ -37,14 +39,8 @@ function Ajustes() {
           </Panel>
           <Panel title="Datos de ejemplo">
             <p className="text-sm text-muted-foreground">Borra todo el historial y los registros y vuelve a generar los datos de ejemplo (semilla 72000).</p>
-            {!confirm ? (
-              <button onClick={() => setConfirm(true)} className="mt-3 h-12 rounded-lg border border-destructive/50 px-4 font-semibold text-destructive">Restaurar datos de ejemplo</button>
-            ) : (
-              <div className="mt-3 flex flex-wrap gap-2">
-                <button disabled={busy} onClick={restore} className="h-12 rounded-lg bg-destructive px-4 font-semibold text-destructive-foreground disabled:opacity-60">{busy ? "Restaurando…" : "Sí, borrar y restaurar"}</button>
-                <button onClick={() => setConfirm(false)} className="h-12 rounded-lg border border-border bg-card px-4">Cancelar</button>
-              </div>
-            )}
+            <Dialog open={confirm} onOpenChange={setConfirm}><DialogTrigger asChild><Button variant="outline" className="mt-3 min-h-12 border-destructive text-destructive">Restaurar datos de ejemplo</Button></DialogTrigger><DialogContent><DialogTitle>¿Restaurar los datos de ejemplo?</DialogTitle><DialogDescription>Se borrarán los registros y el historial de este navegador. Esta acción no se puede deshacer.</DialogDescription><div className="flex flex-wrap gap-3"><Button variant="destructive" disabled={busy} onClick={restore}>{busy ? "Restaurando…" : "Sí, borrar y restaurar"}</Button><Button variant="outline" onClick={()=>setConfirm(false)}>Cancelar</Button></div></DialogContent></Dialog>
+
           </Panel>
           <Panel title="Administración">
             <p className="text-sm text-muted-foreground">Objetivos de servicio y bloqueo, nueva semilla, importar y exportar.</p>
