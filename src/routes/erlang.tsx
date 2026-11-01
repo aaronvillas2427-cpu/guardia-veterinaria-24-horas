@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { PageHeader, Panel, Ready, Segmented } from "@/components/app/kit";
+import { PageHeader, Panel, Ready, Segmented, StatusChip } from "@/components/app/kit";
 import { useStore } from "@/lib/store";
 import { pageHead } from "@/lib/head";
 import { erlangTable, hourLabel, round2 } from "@/engine/params";
@@ -39,29 +39,33 @@ function Erlang() {
             </ul>
           )}
         </Panel>
+        <p className="mb-3 text-xs text-muted-foreground">Δ = espera simulada menos espera Erlang C; un valor negativo significa menor espera simulada.</p>
         <Panel className="mb-4 overflow-hidden p-0">
-          <div className="overflow-x-auto">
+          <div className="max-h-[65dvh] overflow-auto" role="region" aria-label="Comparación Erlang C por hora" tabIndex={0}>
             <table className="w-full min-w-[720px] text-sm">
-              <thead className="bg-muted text-xs text-muted-foreground">
+              <caption className="sr-only">Comparación de turnos, Erlang C y espera simulada</caption>
+              <thead className="sticky top-0 z-10 bg-muted text-xs text-muted-foreground">
                 <tr>
-                  {["Hora", "λ (/h)", "Médicos", "a (Erl)", "ρ", "Pw", "Wq (min)", `NS(${p.targetMinutes} min)`, "Recom.", "Sim. espera (min)"].map((h) => (
-                    <th key={h} className="px-3 py-2 text-right font-semibold first:text-left">{h}</th>
+                  {["Hora", "λ (/h)", "Médicos", "a (Erl)", "ρ", "Pw", "Wq (min)", `NS(${p.targetMinutes} min)`, "Recom.", "Sim. espera (min)", "Δ simulación − Erlang C", "Interpretación"].map((h) => (
+                    <th scope="col" key={h} className="px-3 py-2 text-right font-semibold first:text-left">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="font-mono tabular-nums">
                 {rows.map((r) => (
                   <tr key={r.hour} className="border-t border-border">
-                    <td className="px-3 py-1.5 text-left">{hourLabel(r.hour)}</td>
+                    <th scope="row" className="px-3 py-3 text-left font-normal">{hourLabel(r.hour)}</th>
                     <td className="px-3 text-right">{round2(r.lambda).toFixed(2)}</td>
                     <td className="px-3 text-right">{r.c}</td>
                     <td className="px-3 text-right">{fmt(r.a, 2)}</td>
-                    <td className={cn("px-3 text-right", !r.stable && "text-destructive")}>{fmt(r.rho, 2)}</td>
+                    <td className={cn("px-3 text-right", !r.stable && "text-destructive")}>{fmt(r.rho, 2)}{!r.stable && <StatusChip tone="bad"/>}</td>
                     <td className="px-3 text-right">{r.stable ? pct(r.pw) : "—"}</td>
-                    <td className={cn("px-3 text-right", !r.stable && "font-sans font-semibold text-destructive")}>{r.stable ? fmt(r.wqMin!) : "insuficiente"}</td>
-                    <td className="px-3 text-right">{r.stable ? pct(r.ns!) : "—"}</td>
+                    <td className={cn("px-3 text-right", !r.stable && "font-sans font-semibold text-destructive")}>{r.stable ? fmt(r.wqMin ?? 0) : "insuficiente"}</td>
+                    <td className="px-3 text-right">{r.stable ? pct(r.ns ?? 0) : "—"}</td>
                     <td className={cn("px-3 text-right font-semibold", r.recommended > r.c ? "text-destructive" : r.recommended < r.c ? "text-primary" : "")}>{r.recommended}</td>
                     <td className="px-3 text-right text-muted-foreground">{sim ? fmt(sim.summary.slotWait[r.hour] ?? 0) : "—"}</td>
+                    <td className="px-3 text-right">{sim && r.stable ? `${(sim.summary.slotWait[r.hour]??0) >= (r.wqMin??0) ? "+" : ""}${fmt((sim.summary.slotWait[r.hour]??0)-(r.wqMin??0))} min` : "—"}</td>
+                    <td className="min-w-56 px-3 py-3 font-sans text-xs text-muted-foreground">{!sim ? "Ejecute una simulación de este tipo de día para comparar." : !r.stable ? "Erlang C no es estable; el abandono limita la cola simulada." : (sim.summary.slotWait[r.hour]??0)<(r.wqMin??0) ? "La espera simulada es menor; el abandono y las prioridades modifican la cola." : "La espera simulada es mayor o igual; puede arrastrar pacientes de la franja anterior."}</td>
                   </tr>
                 ))}
               </tbody>
