@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { NumField, PageHeader, Panel, Ready } from "@/components/app/kit";
 import { useStore } from "@/lib/store";
@@ -136,4 +136,3 @@ function SpeciesCard({ r, p, setSp }: { r: ReturnType<typeof cageAnalysis>[numbe
   );
 }
 
-export const _useMemo = useMemo;
