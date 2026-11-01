@@ -14,7 +14,7 @@ const T95 = [
 
 export function tCrit95(df: number): number {
   if (df <= 0) return 0;
-  return df < T95.length ? T95[df] : 1.96;
+  return df < T95.length ? T95[df]! : 1.96;
 }
 
 export function mean(xs: readonly number[]): number {
@@ -47,5 +47,5 @@ export function quantile(xs: readonly number[], q: number): number {
   const pos = (s.length - 1) * Math.min(1, Math.max(0, q));
   const lo = Math.floor(pos);
   const hi = Math.ceil(pos);
-  return s[lo] + (s[hi] - s[lo]) * (pos - lo);
+  return s[lo]! + (s[hi]! - s[lo]!) * (pos - lo);
 }

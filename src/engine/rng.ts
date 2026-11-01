@@ -36,5 +36,5 @@ export function sampleDist(r: Rng, d: Dist): number {
 }
 
 export function pick<T>(r: Rng, arr: readonly T[]): T {
-  return arr[Math.floor(r() * arr.length) % arr.length];
+  return arr[Math.floor(r() * arr.length) % arr.length]!;
 }

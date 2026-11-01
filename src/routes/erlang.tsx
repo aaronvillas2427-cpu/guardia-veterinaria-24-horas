@@ -61,7 +61,7 @@ function Erlang() {
                     <td className={cn("px-3 text-right", !r.stable && "font-sans font-semibold text-destructive")}>{r.stable ? fmt(r.wqMin!) : "insuficiente"}</td>
                     <td className="px-3 text-right">{r.stable ? pct(r.ns!) : "—"}</td>
                     <td className={cn("px-3 text-right font-semibold", r.recommended > r.c ? "text-destructive" : r.recommended < r.c ? "text-primary" : "")}>{r.recommended}</td>
-                    <td className="px-3 text-right text-muted-foreground">{sim ? fmt(sim.summary.slotWait[r.hour]) : "—"}</td>
+                    <td className="px-3 text-right text-muted-foreground">{sim ? fmt(sim.summary.slotWait[r.hour] ?? 0) : "—"}</td>
                   </tr>
                 ))}
               </tbody>

@@ -29,7 +29,7 @@ export function Panel({ title, children, className, aside }: { title?: string; c
   );
 }
 
-export function Metric({ label, value, unit, hint, tone }: { label: string; value: string; unit?: string; hint?: string; tone?: "ok" | "warn" | "bad" }) {
+export function Metric({ label, value, unit, hint, tone }: { label: string; value: string; unit?: string | undefined; hint?: string | undefined; tone?: "ok" | "warn" | "bad" | undefined }) {
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-panel">
       <div className="text-xs font-medium text-muted-foreground">{label}</div>
@@ -51,7 +51,7 @@ export function SlotBars({ values, highlight, format = (v) => String(v), height 
         {values.map((v, h) => (
           <div key={h} className="relative flex h-full flex-1 items-end" title={`${String(h).padStart(2, "0")}:00 — ${format(v)}`}>
             <div className={cn("w-full rounded-t-sm", h === highlight ? "bg-primary" : "bg-primary/35")} style={{ height: `${(v / max) * 100}%` }} />
-            {compare && <div className="absolute inset-x-0 border-t-2 border-foreground/60" style={{ bottom: `${(compare[h] / max) * 100}%` }} />}
+            {compare && <div className="absolute inset-x-0 border-t-2 border-foreground/60" style={{ bottom: `${(compare[h]! / max) * 100}%` }} />}
           </div>
         ))}
       </div>

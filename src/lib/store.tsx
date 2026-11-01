@@ -98,7 +98,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const data = m.data as { type: string; event?: unknown };
         if (data?.type === "event") {
           const pe = parseEvents([data.event]);
-          if (pe.valid[0]) setEvents((prev) => (prev.some((x) => x.id === pe.valid[0].id) ? prev : [...prev, pe.valid[0]]));
+          const ne = pe.valid[0];
+          if (ne) setEvents((prev) => (prev.some((x) => x.id === ne.id) ? prev : [...prev, ne]));
         } else if (data?.type === "reset") {
           notified.current = null;
           void loadFromDb();

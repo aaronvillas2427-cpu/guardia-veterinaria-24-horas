@@ -44,7 +44,10 @@ function AdminPanel() {
 
   const regenerate = async () => {
     const n = Number(seed);
-    if (!Number.isInteger(n) || n < 0 || n > 4294967295) return toast.error("La semilla debe ser un entero entre 0 y 4 294 967 295.");
+    if (!Number.isInteger(n) || n < 0 || n > 4294967295) {
+      toast.error("La semilla debe ser un entero entre 0 y 4 294 967 295.");
+      return;
+    }
     setBusy(true);
     await resetSample(n);
     setBusy(false);

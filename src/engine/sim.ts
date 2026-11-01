@@ -75,15 +75,15 @@ export class EventHeap {
     let i = a.length - 1;
     while (i > 0) {
       const p = (i - 1) >> 1;
-      if (!less(a[i], a[p])) break;
-      [a[i], a[p]] = [a[p], a[i]];
+      if (!less(a[i]!, a[p]!)) break;
+      [a[i], a[p]] = [a[p]!, a[i]!];
       i = p;
     }
   }
   pop(): Ev | undefined {
     const a = this.a;
     if (!a.length) return undefined;
-    const top = a[0];
+    const top = a[0]!;
     const last = a.pop()!;
     if (a.length) {
       a[0] = last;
@@ -92,10 +92,10 @@ export class EventHeap {
         const l = 2 * i + 1;
         const r = l + 1;
         let m = i;
-        if (l < a.length && less(a[l], a[m])) m = l;
-        if (r < a.length && less(a[r], a[m])) m = r;
+        if (l < a.length && less(a[l]!, a[m]!)) m = l;
+        if (r < a.length && less(a[r]!, a[m]!)) m = r;
         if (m === i) break;
-        [a[i], a[m]] = [a[m], a[i]];
+        [a[i], a[m]] = [a[m]!, a[i]!];
         i = m;
       }
     }
@@ -143,8 +143,8 @@ export function simulateDay(input: SimInput, seed: number): DayResult {
 
   const nextFrom = (q: number[], head: number): [number, number] => {
     while (head < q.length) {
-      const x = q[head++];
-      if (!P[x].gone) return [x, head];
+      const x = q[head++]!;
+      if (!P[x]!.gone) return [x, head];
     }
     return [-1, head];
   };
@@ -156,7 +156,7 @@ export function simulateDay(input: SimInput, seed: number): DayResult {
       [pid, hu] = nextFrom(qU, hu);
       if (pid < 0) [pid, hc] = nextFrom(qC, hc);
       if (pid < 0) return;
-      const p = P[pid];
+      const p = P[pid]!;
       p.start = t;
       busy++;
       push(t + sampleDist(r, p.urgent ? input.serviceUrgencia : input.serviceConsulta), DEP, pid);
@@ -170,7 +170,7 @@ export function simulateDay(input: SimInput, seed: number): DayResult {
     } else if (e.kind === SLOT) {
       tryStart(e.t);
     } else if (e.kind === ARR) {
-      const p = P[e.pid];
+      const p = P[e.pid]!;
       if (p.urgent) qU.push(e.pid);
       else {
         qC.push(e.pid);
@@ -179,7 +179,7 @@ export function simulateDay(input: SimInput, seed: number): DayResult {
       }
       tryStart(e.t);
     } else {
-      const p = P[e.pid];
+      const p = P[e.pid]!;
       if (p.start < 0 && !p.gone) {
         p.gone = true;
         abandoned++;
@@ -208,8 +208,8 @@ export function simulateDay(input: SimInput, seed: number): DayResult {
     }
     const w = p.start - p.arr;
     (p.urgent ? res.waitsU : res.waitsC).push(w);
-    res.slotWaitSum[p.slot] += w;
-    res.slotServed[p.slot]++;
+    res.slotWaitSum[p.slot]! += w;
+    res.slotServed[p.slot]!++;
   }
   return res;
 }
@@ -231,9 +231,9 @@ export function simulateShifts(input: SimInput): SimSummary {
     for (const w of d.waitsU) (all.push(w), allU.push(w));
     for (const w of d.waitsC) (all.push(w), allC.push(w));
     for (let h = 0; h < 24; h++) {
-      slotSum[h] += d.slotWaitSum[h];
-      slotN[h] += d.slotServed[h];
-      slotAb[h] += d.slotAbandoned[h];
+      slotSum[h] += d.slotWaitSum[h]!;
+      slotN[h] += d.slotServed[h]!;
+      slotAb[h] += d.slotAbandoned[h]!;
     }
   }
   return {

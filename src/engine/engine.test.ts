@@ -216,8 +216,8 @@ describe("event store", () => {
     const s = replay([a, b], d);
     expect(s.occupancy.gato[0]?.admissionId).toBe("B");
     expect(s.rejections).toHaveLength(1);
-    expect(s.rejections[0].eventId).toBe("a");
-    expect(s.rejections[0].suggestion).toBe(1);
+    expect(s.rejections[0]!.eventId).toBe("a");
+    expect(s.rejections[0]!.suggestion).toBe(1);
     const dis = replay([a, b, ev("c", 3000, "discharge", { admissionId: "B" })], d);
     expect(dis.occupancy.gato[0]).toBeNull();
     expect(replay([ev("x", 1, "admit", { admissionId: "X", species: "gato", cage: 999, patient: "p" })], d).rejections).toHaveLength(1);

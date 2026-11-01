@@ -48,7 +48,7 @@ function Turnos() {
             <div className="text-right text-xs font-semibold text-muted-foreground">λ result.</div>
             <div className="text-xs font-semibold text-muted-foreground">Médicos</div>
             {lam.map((l, h) => (
-              <Row key={h} h={h} base={p.lambdaWeekday[h]} result={l} vets={vets[h]} editLambda={day === "weekday"} onLambda={setLambda} onVets={setVets} />
+              <Row key={h} h={h} base={p.lambdaWeekday[h] ?? 0} result={l} vets={vets[h] ?? 0} editLambda={day === "weekday"} onLambda={setLambda} onVets={setVets} />
             ))}
           </div>
           {day === "weekend" && <p className="mt-3 text-xs text-muted-foreground">Para cambiar λ base use la pestaña «Entre semana».</p>}

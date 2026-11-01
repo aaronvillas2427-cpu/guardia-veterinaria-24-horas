@@ -78,7 +78,7 @@ export function erlangTable(p: Params, day: DayType): ErlangRow[] {
   const vets = vetsFor(p, day);
   return lam.map((l, hour) => ({
     hour,
-    ...erlangC(vets[hour], l, mu, p.targetMinutes),
+    ...erlangC(vets[hour] ?? 0, l, mu, p.targetMinutes),
     recommended: recommendVets(l, mu, p.targetMinutes, p.targetServiceLevel),
   }));
 }

@@ -85,7 +85,7 @@ function Registros() {
         {count === 0 ? (
           <EmptyState title="Sin resultados">{visits.length + hosps.length === 0 ? "No hay registros. Restaure los datos de ejemplo en Ajustes." : "Ningún registro coincide con los filtros."}</EmptyState>
         ) : tab === "v" ? (
-          <VList count={vRows.length} render={(i) => { const v = vRows[i]; return (
+          <VList count={vRows.length} render={(i) => { const v = vRows[i]!; return (
             <div className="flex h-full items-center gap-3 border-b border-border px-3">
               <span className={cn("w-2 self-stretch my-3 rounded-full", v.type === "urgencia" ? "bg-destructive" : "bg-primary/50")} />
               <div className="min-w-0 flex-1">
@@ -95,7 +95,7 @@ function Registros() {
               <div className="text-right font-mono text-sm tabular-nums">{fmt(v.waitMin)} <span className="text-xs text-muted-foreground">min</span>{v.abandoned && <div className="text-[11px] font-sans font-semibold text-destructive">abandonó</div>}</div>
             </div>); }} />
         ) : (
-          <VList count={hRows.length} render={(i) => { const h = hRows[i]; return (
+          <VList count={hRows.length} render={(i) => { const h = hRows[i]!; return (
             <div className="flex h-full items-center gap-3 border-b border-border px-3">
               <span className={cn("w-2 self-stretch my-3 rounded-full", h.referred ? "bg-destructive" : "bg-primary/50")} />
               <div className="min-w-0 flex-1">
