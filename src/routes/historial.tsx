@@ -68,8 +68,8 @@ function Historial() {
             title={`Eventos (${events.length})`}
             aside={
               <div className="flex gap-2">
-                <Button onClick={undo} disabled={!state.undoStack.length} className="h-11 rounded-lg border border-border bg-card px-3 text-sm disabled:opacity-40">Deshacer ({state.undoStack.length})</Button>
-                <Button onClick={redo} disabled={!state.redoStack.length} className="h-11 rounded-lg border border-border bg-card px-3 text-sm disabled:opacity-40">Rehacer ({state.redoStack.length})</Button>
+                <Button variant="outline" onClick={undo} disabled={!state.undoStack.length} className="h-11 rounded-lg border border-border bg-card px-3 text-sm disabled:opacity-40">Deshacer ({state.undoStack.length})</Button>
+                <Button variant="outline" onClick={redo} disabled={!state.redoStack.length} className="h-11 rounded-lg border border-border bg-card px-3 text-sm disabled:opacity-40">Rehacer ({state.redoStack.length})</Button>
               </div>
             }
           >

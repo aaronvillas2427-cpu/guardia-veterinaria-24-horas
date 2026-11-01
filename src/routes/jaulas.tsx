@@ -62,7 +62,7 @@ function Jaulas() {
             <Panel key={s} title={`${SPECIES_LABEL[s]} · ${state.occupancy[s].filter(Boolean).length}/${p.cages[s]} ocupadas`}>
               <div className="grid grid-cols-4 gap-2 sm:grid-cols-8">
                 {state.occupancy[s].map((a, i) => (
-                  <Button
+                  <Button variant="ghost"
                     key={i}
                     onClick={() => setSelected({ s, i })}
                     aria-label={`${SPECIES_SINGULAR[s]} ${i + 1} ${a ? "ocupada" : "libre"}`}
@@ -131,7 +131,7 @@ function SpeciesCard({ r, p, setSp }: { r: ReturnType<typeof cageAnalysis>[numbe
       </p>
       <details className="mt-4 border-t border-border/40 text-sm"><summary className="font-medium text-primary">¿Por qué este número?</summary><p className="pb-3 leading-relaxed text-muted-foreground">Con {fmt(p.admissionsPerDay[s])} ingresos diarios y {fmt(p.meanStayDays[s])} días de estancia, se necesitan en promedio {fmt(r.a)} jaulas. Erlang B calcula la probabilidad de que todas estén ocupadas. {r.minCages} jaulas es el mínimo para mantener los pacientes referidos por debajo del objetivo de {pct(p.targetBlocking)}.</p></details>
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <Button onClick={validate} className="h-11 rounded-lg border border-border bg-card px-3 text-sm font-medium hover:border-primary">Validar con simulación</Button>
+        <Button variant="outline" onClick={validate} className="h-11 rounded-lg border border-border bg-card px-3 text-sm font-medium hover:border-primary">Validar con simulación</Button>
         {current && <span className="text-xs text-muted-foreground">Sim.: {pct(current.mean, 2)} (IC {pct(Math.max(0, current.lo), 1)}–{pct(current.hi, 1)})</span>}
       </div>
     </Panel>

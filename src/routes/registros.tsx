@@ -81,7 +81,7 @@ function Registros() {
         </div>
         <div className="mb-2 flex items-center justify-between">
           <span className="font-mono text-sm tabular-nums">{count.toLocaleString("es-MX")} filas</span>
-          <Button onClick={exportCsv} disabled={!count} className="flex h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium disabled:opacity-40"><Download className="h-4 w-4" /> Exportar CSV</Button>
+          <Button variant="outline" onClick={exportCsv} disabled={!count} className="flex h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium disabled:opacity-40"><Download className="h-4 w-4" /> Exportar CSV</Button>
         </div>
         {count === 0 ? (
           <EmptyState title="Sin resultados">{visits.length + hosps.length === 0 ? "No hay registros. Restaure los datos de ejemplo en Ajustes." : <Button variant="outline" className="mt-3" onClick={()=>{setQ("");setSpecies("all");setKind("all");setFrom("");setTo("");}}>Limpiar filtros</Button>}</EmptyState>

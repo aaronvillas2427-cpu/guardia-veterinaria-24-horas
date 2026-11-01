@@ -66,7 +66,7 @@ function Simulacion() {
             </Button>
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
-            Médicos por franja: {vetsFor(p, day).join(" · ")} — <Link to="/turnos" className="text-primary">editar en Turnos</Link>
+            Médicos por franja: {vetsFor(p, day).join(" · ")} — <Link to="/turnos" className="min-h-11 inline-flex items-center text-primary underline">editar en Turnos</Link>
           </p>
         </Panel>
 
